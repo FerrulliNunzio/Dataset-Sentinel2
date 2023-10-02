@@ -69,12 +69,15 @@ while True:
         GeoJson_file_path = GeoJson_folder_directory.get_complete_path() + "/" + Geo_file_selected
         Shape_forlder_directory = PathManager()
         Shape_forlder_directory.set_complete_path("Shape_File")
-        os.makedirs(Shape_forlder_directory.get_complete_path() + "/" + Geo_file_selected)
-        Shape_file_path = Shape_forlder_directory.get_complete_path() + "/" + Geo_file_selected
-        GeoCoordinate = GeoGeometry(GeoJson_file_path)
-        Coordinate = GeoCoordinate.get_Coordinates()
-        gdp = gdp.read_file(GeoJson_file_path)
-        gdp.to_file(Shape_file_path + "/" + Geo_file_selected + ".shp")
+        try:
+            os.makedirs(Shape_forlder_directory.get_complete_path() + "/" + Geo_file_selected)
+            Shape_file_path = Shape_forlder_directory.get_complete_path() + "/" + Geo_file_selected
+            GeoCoordinate = GeoGeometry(GeoJson_file_path)
+            Coordinate = GeoCoordinate.get_Coordinates()
+            gdp = gdp.read_file(GeoJson_file_path)
+            gdp.to_file(Shape_file_path + "/" + Geo_file_selected + ".shp")
+        except FileExistsError:
+            print("Esiste già una cartella con questo nome e questi file salvati")
 
     if int(choise) == 2:
         semi_path = ""
