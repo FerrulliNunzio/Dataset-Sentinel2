@@ -10,6 +10,7 @@ import ee
 import folder as folder
 import geemap
 import csv
+import webbrowser
 import geopandas as gdp
 from ee import collection, image
 from ee.batch import Export
@@ -127,6 +128,25 @@ while True:
         Geometry = first_feature['geometry']
         Dataset = CollectionImage.filter_bound(Dataset, Geometry)
         print(Dataset.size().getInfo())
+        while True:
+            print("Inserire:\n"
+                  "1: visualizzare la mappa;\n"
+                  "2: non visualizzare la mappa.")
+            inp = input()
+            if int(inp) == 1 or int(inp) == 2:
+                break
+
+        if int(inp) == 1:
+            Map = geemap.Map()
+            Coord = Geojson.get_Coordinates()
+            Geom = ee.Geometry.Polygon([Coord[0][0][0], Coord[0][0][1],
+                                        Coord[0][0][2], Coord[0][0][3],
+                                        Coord[0][0][4], Coord[0][0][5]])
+            Map.centerObject(Geom, 12)
+            Map.addLayer(Dataset.median(), VisualParams, "RGB")
+            html_file = "C:/Users/Utente/Desktop/mappa_gee.html"
+            Map.to_html(html_file)
+            webbrowser.open(html_file)
     #end
 
 
