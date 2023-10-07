@@ -19,6 +19,7 @@ from Scripts.Collection.GeoGeometry import GeoGeometry
 from Scripts.Connection.Autentication import Autentication
 from Scripts.Collection.ImgCollection import ImgCollection
 from Scripts.PathManager.PathManager import PathManager
+from Scripts.Square import Square
 from Scripts.Utility.VisualParams import VisualParams
 
 COPERNICUS_SURFACE_REFLECTANCE_ID = "COPERNICUS/S2_SR_HARMONIZED"
@@ -110,11 +111,12 @@ while True:
                 break
 
         path_with_file = ""
-        path_with_file = Path.get_complete_path() + "/" + Path.get_file_in_path()[int(selection) - 1]
-
+        FileName = Path.get_file_in_path()[int(selection) - 1]
+        path_with_file = Path.get_complete_path() + "/" + FileName
         print(path_with_file)
 
         # Loading data from Google Earth Engine
+        Mask = ee.Image("projects/nunzioferrulli/assets/mask_78")
         id = COPERNICUS_SURFACE_REFLECTANCE_ID
         CollectionImage = ImgCollection(id)
 
@@ -128,6 +130,38 @@ while True:
         Geometry = first_feature['geometry']
         Dataset = CollectionImage.filter_bound(Dataset, Geometry)
         print(Dataset.size().getInfo())
+        DatasetWithBands = Dataset.select(['B1', 'B2', 'B3',
+                                           'B4', 'B5', 'B6',
+                                           'B7', 'B8', 'B9',
+                                           'B8A', 'B11', 'B12', 'SCL'])
+        Projection = Mask.projection()
+        Transform = Projection.getInfo()['transform']
+        quadrato = Square(path_with_file)
+        ExportOptions = {
+            'image': DatasetWithBands.median(),
+            'description': "Immagine",
+            'folder': 'DataSetSentinel2',
+            'fileNamePrefix': 'Image' + FileName,
+            'region': quadrato.getSquare().coordinates().getInfo(),
+            'fileFormat': 'GeoTIFF',
+            'maxPixels': 10000000000000,
+            'crs': 'EPSG:4326',
+            'crsTransform': Transform,
+            'formatOptions': {
+                'cloudOptimized': True
+            }
+        }
+        task = Export.image.toDrive(**ExportOptions)
+        task.start()
+
+        while task.active():
+            print("Stato dell'esportazione:", task.status())
+
+        if task.status()['state'] == 'COMPLETED':
+            print("Esportazione completata.\n"
+                  "Accedi al tuo drive per scaricare l'immagine.")
+        else:
+            print('Esportazione non riuscita o in corso.')
         while True:
             print("Inserire:\n"
                   "1: visualizzare la mappa;\n"
