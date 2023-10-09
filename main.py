@@ -12,6 +12,8 @@ import geemap
 import csv
 import webbrowser
 import geopandas as gdp
+import requests
+import requests
 from ee import collection, image
 from ee.batch import Export
 
@@ -137,6 +139,7 @@ while True:
         Projection = Mask.projection()
         Transform = Projection.getInfo()['transform']
         quadrato = Square(path_with_file)
+
         ExportOptions = {
             'image': DatasetWithBands.median(),
             'description': "Immagine",
@@ -162,6 +165,7 @@ while True:
                   "Accedi al tuo drive per scaricare l'immagine.")
         else:
             print('Esportazione non riuscita o in corso.')
+
         while True:
             print("Inserire:\n"
                   "1: visualizzare la mappa;\n"
@@ -173,11 +177,9 @@ while True:
         if int(inp) == 1:
             Map = geemap.Map()
             Coord = Geojson.get_Coordinates()
-            Geom = ee.Geometry.Polygon([Coord[0][0][0], Coord[0][0][1],
-                                        Coord[0][0][2], Coord[0][0][3],
-                                        Coord[0][0][4], Coord[0][0][5]])
+            Geom = quadrato.getSquare()
             Map.centerObject(Geom, 12)
-            Map.addLayer(Dataset.median(), VisualParams, "RGB")
+            Map.addLayer(DatasetWithBands.median(), VisualParams, "RGB")
             html_file = "C:/Users/Utente/Desktop/mappa_gee.html"
             Map.to_html(html_file)
             webbrowser.open(html_file)
