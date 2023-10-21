@@ -2,32 +2,60 @@ import ee
 
 
 class Autentication:
-    Autenticate: bool
-    Initializate: bool
+    __Autenticate: bool
 
+    """
+    Nome: __init__
+
+    Input: //
+
+    Output: //
+
+    Comportamento: Costruttore che inizializza le variabili __Autenticate.
+    """
     def __init__(self):
-        self.Autenticate = False
-        self.Initializate = False
+        self.__Autenticate = False
 
-    def isAutenticate(self):
-        return self.Autenticate
+    """
+    Nome: is_autenticate
 
-    def isInitializate(self):
-        return self.Initializate
+    Input: //
 
+    Output: restituisce il valore della variabile __Autenticate.
+
+    Comportamento: restituisce il valore della variabile __Autenticate.
+    """
+    def is_autenticate(self):
+        return self.__Autenticate
+
+    """
+    Nome: autentication
+
+    Input: //
+
+    Output: //
+
+    Comportamento: controlla se l'utente si è gia autenticato. 
+                   Se l'utente non si è gia autenticato effettua l'autenticazione.
+    """
     def autentication(self):
-        if not self.isAutenticate():
+        if not self.is_autenticate():
             ee.Authenticate()
-            self.Autenticate = True
+            self.__Autenticate = True
         else:
             print("Il tuo profilo Google Earth Engine è già autenticato")
 
+    """
+    Nome: initializate
+
+    Input: //
+
+    Output: //
+
+    Comportamento: Inizializza  la libreria di Google Earth Engine.
+    """
     def initializate(self):
-        if not self.isInitializate():
-            ee.Initialize()
-            self.Initializate = True
-        else:
-            print("Inizializzazione già eseguita.")
+        ee.Initialize()
 
 
 
