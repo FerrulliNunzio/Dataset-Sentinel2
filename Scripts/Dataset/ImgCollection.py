@@ -11,24 +11,8 @@ class ImgCollection:
 
     Comportamento: inizializza la variabile JsonManagement importando la collezione di immagini.
     """
-    def __init__(self, CollectionIdentifier):
-        self.Collection = ee.ImageCollection(CollectionIdentifier)
-
-    """
-    Nome: maskS2clouds
-    
-    Input: immagine
-    
-    Output: immagine con la maschera delle nuvole
-    
-    Comportamento: Funzione per mascherare le nuvole utilizzando la banda QA Sentinel-2
-    """
-    def maskS2clouds(image):
-        qa = image.select('QA60')
-        cloudBitMask = 1 << 10
-        cirrusBitMask = 1 << 11
-        mask = (qa.bitwiseAnd(cloudBitMask).eq(0)) and (qa.bitwiseAnd(cirrusBitMask).eq(0))
-        return image.updateMask(mask).divide(10000)
+    def __init__(self, collection_identifier):
+        self.Collection = ee.ImageCollection(collection_identifier)
 
     """
     Nome: filteredCollection
@@ -41,8 +25,8 @@ class ImgCollection:
                    Carica i dati Sentinel-2 adattati per l'elaborazione delle modifiche
                    verificatesi dopo la data finale (endDate)
     """
-    def filteredCollection(self,startDate, endDate):
-       return self.Collection.filterDate(startDate, endDate).filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
+    def filtered_collection(self, start_date, end_date):
+        return self.Collection.filterDate(start_date, end_date).filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
 
     """
     Nome: filtered_bound
@@ -53,5 +37,5 @@ class ImgCollection:
 
     Comportamento: filtra la collezione passata in input con geometria passata in input
     """
-    def filter_bound(self, Coll, Geometry):
-        return Coll.filterBounds(Geometry)
+    def filter_bound(self, coll, geometry):
+        return coll.filterBounds(geometry)

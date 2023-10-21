@@ -1,5 +1,6 @@
 import ee
 
+
 class Dataset:
 
     __ImageCollection = None
@@ -75,6 +76,4 @@ class Dataset:
     """
     def get_collection_length(self):
         return self.__ImageCollection.size().getInfo()
-
-
 

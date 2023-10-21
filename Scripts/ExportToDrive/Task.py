@@ -1,9 +1,13 @@
-from ee.batch import Task, Export
+import ee.batch
+from ee.batch import Export
 from Scripts.ExportToDrive.ComparatorTaskStatus import ComparatorTaskStatus
 from Scripts.ExportToDrive.TaskException import TaskException
 
 
 class Task:
+
+    __Task: ee.batch.Task
+
     """
     Nome: __init__
 
@@ -14,7 +18,7 @@ class Task:
     Comportamento: Inizializza la variabile __Task.
     """
     def __init__(self):
-        self.__Task = Task
+        self.__Task = None
 
     """
     Nome: set_task
@@ -25,8 +29,8 @@ class Task:
 
     Comportamento: Avvalora la variabile __Task.
     """
-    def set_task(self, esportOption: dict):
-        self.__Task = Export.image.toDrive(**esportOption)
+    def set_task(self, esport_option: dict):
+        self.__Task = Export.image.toDrive(**esport_option)
 
     """
     Nome: start_task
@@ -89,10 +93,10 @@ class Task:
     """
     def activity_status_monitoring(self):
         if not self.is_active():
-            raise TaskException("Il task non è stato avviato")
+            raise TaskException("The task has not been started.")
         else:
             while self.__Task.active():
-                print("Stato dell'esportazione:", self.__Task.status())
+                print("Export status:", self.__Task.status())
 
     """
     Nome: task_completed
@@ -118,7 +122,7 @@ class Task:
     """
     def export_completed(self):
         if self.task_completed():
-            print("Esportazione completata.\n"
-                  "Accedi al tuo drive per scaricare l'immagine.")
+            print("Export completed.\n"
+                  "Access your Google Drive to download the image.")
         else:
-            print('Esportazione non riuscita o in corso.')
+            print('Export failed or in progress.')

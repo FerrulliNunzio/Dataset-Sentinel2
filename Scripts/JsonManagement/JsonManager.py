@@ -1,6 +1,7 @@
 import json
 from Scripts.Geometry.MbrPolygon import MbrPolygon
 
+
 class JsonManager:
     """
     Nome: __init__
@@ -68,7 +69,7 @@ class JsonManager:
     """
 
     def get_first_feature(self):
-        if self.contain_geometry() == True:
+        if self.contain_geometry():
             return self.Data['features'][0]
         else:
             print("Il file JSON non contiene una struttura GeoJSON valida")
@@ -97,12 +98,11 @@ class JsonManager:
                    estraendo le geometrie dalle feature del file e restituisce la lista Coordinates piena
     """
 
-    def get_Coordinates(self):
+    def get_coordinates(self):
         if len(self.Coordinates) == 0:
             self.__extract_geometry()
         return self.Coordinates
 
-    def getOutsideRectangle(self, path):
+    def get_outside_rectangle(self, path):
         rectangle = MbrPolygon(path)
         return rectangle.get_square()
-

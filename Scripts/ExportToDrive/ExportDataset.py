@@ -8,19 +8,6 @@ class ExportDataset:
 
     """
     Nome: __init__
-    
-    Input: //
-    
-    Output: //
-    
-    Comportamento: inizializza le variabili __ExportOptions, __Task.
-    """
-    def __init__(self):
-        self.__ExportOptions = {}
-        self.__Task = Task()
-
-    """
-    Nome: __init__
 
     Input: option
 

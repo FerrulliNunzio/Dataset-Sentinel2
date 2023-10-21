@@ -2,7 +2,7 @@ import ee
 
 
 class Polygon:
-    __Polygon = None
+    __Polygon: ee.Geometry.Polygon = None
 
     """ Nome: __init__
         

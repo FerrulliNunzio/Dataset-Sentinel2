@@ -1,7 +1,6 @@
 import json
 from shapely import MultiPolygon
 from shapely.geometry import shape
-
 from Scripts.Geometry.Polygon import Polygon
 
 

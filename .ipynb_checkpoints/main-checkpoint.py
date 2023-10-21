@@ -73,7 +73,7 @@ if __name__ == '__main__':
     ImgCollection = ImgCollection(id)
 
     # Creation of the customized dataset
-    Dataset = ImgCollection.filteredCollection(START_DATE, END_DATE)
+    Dataset = ImgCollection.filtered_collection(START_DATE, END_DATE)
     Dataset.map(maskS2clouds)
 
     # Loaded the GeoJSON file to get the geometry of the first feature of the file

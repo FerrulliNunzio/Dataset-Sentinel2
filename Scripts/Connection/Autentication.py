@@ -57,5 +57,3 @@ class Autentication:
     def initializate(self):
         ee.Initialize()
 
-
-
