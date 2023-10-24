@@ -46,7 +46,7 @@ if __name__ == '__main__':
     Autenticate.autentication()
     Autenticate.initializate()
 
-    count = 93
+    count = 0
     while count <= 93:
         try:
             print(f"Downloading the images of the geojson_{count} file...\n")
