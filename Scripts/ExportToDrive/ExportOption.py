@@ -1,3 +1,6 @@
+import ee
+
+
 class ExportOption:
 
     __ExportOption: dict = None
@@ -11,7 +14,8 @@ class ExportOption:
         
         Comportamento: Inizializza la variabile __ExportOption
     """
-    def __init__(self, image, description, folder, file_name_prefix, region, file_format, crs, crs_transfrorm):
+    def __init__(self, image: ee.Image, description: str, folder: str, file_name_prefix: str,
+                 region: ee.Geometry, file_format: str, crs: str, crs_transfrorm):
         self.__ExportOptions = {
             'image': image,
             'description': description,

@@ -4,6 +4,9 @@ FOLDER = "/Materiale"
 
 
 class PathManager:
+
+    __Path: str
+
     """
     Nome: __init__
 
@@ -15,7 +18,7 @@ class PathManager:
     """
 
     def __init__(self):
-        self.Path = ""
+        self.__Path = ""
 
     """
     Nome: __convert_path
@@ -27,7 +30,7 @@ class PathManager:
     Comportamento: sostituisce il carattere '\ ' con il carattere '/'.
     """
 
-    def __convert_path(self, path):
+    def __convert_path(self, path: str):
         s = "\ "
         node_path = path.split(s[0])
         correct_path = ""
@@ -49,8 +52,8 @@ class PathManager:
         """
 
     def __get_general_path(self):
-        self.Path = os.getcwd()
-        return self.__convert_path(self.Path)
+        self.__Path = os.getcwd()
+        return self.__convert_path(self.__Path)
 
     """
         Nome: get_file_in_path
@@ -63,8 +66,8 @@ class PathManager:
         """
 
     def get_file_in_path(self):
-        if self.Path != "":
-            return os.listdir(self.Path)
+        if self.__Path != "":
+            return os.listdir(self.__Path)
         else:
             empty_list = []
             return empty_list
@@ -80,7 +83,7 @@ class PathManager:
         """
 
     def get_complete_path(self):
-        return self.Path
+        return self.__Path
 
     """
         Nome: set_complete_path
@@ -92,8 +95,8 @@ class PathManager:
         Comportamento: Avvalora la variabile Path con il path del file.
         """
 
-    def set_complete_path(self, semi_path):
-        self.Path = self.__get_general_path() + FOLDER + "/" + semi_path
+    def set_complete_path(self, semi_path: str):
+        self.__Path = self.__get_general_path() + FOLDER + "/" + semi_path
 
     """
         Nome: print_file_in_path
@@ -106,7 +109,7 @@ class PathManager:
         """
 
     def print_file_in_path(self):
-        files_list = os.listdir(self.Path)
+        files_list = os.listdir(self.__Path)
         if not files_list:
             print("La cartella non contiene nessun elemento")
         else:

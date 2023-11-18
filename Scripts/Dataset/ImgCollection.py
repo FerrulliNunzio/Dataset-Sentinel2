@@ -2,6 +2,9 @@ import ee
 
 
 class ImgCollection:
+
+    __Collection: ee.ImageCollection
+
     """
     Nome: __init__
 
@@ -11,8 +14,8 @@ class ImgCollection:
 
     Comportamento: inizializza la variabile JsonManagement importando la collezione di immagini.
     """
-    def __init__(self, collection_identifier):
-        self.Collection = ee.ImageCollection(collection_identifier)
+    def __init__(self, collection_identifier: str):
+        self.__Collection = ee.ImageCollection(collection_identifier)
 
     """
     Nome: filteredCollection
@@ -25,8 +28,8 @@ class ImgCollection:
                    Carica i dati Sentinel-2 adattati per l'elaborazione delle modifiche
                    verificatesi dopo la data finale (endDate)
     """
-    def filtered_collection(self, start_date, end_date):
-        return self.Collection.filterDate(start_date, end_date).filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
+    def filtered_collection(self, start_date: str, end_date: str):
+        return self.__Collection.filterDate(start_date, end_date).filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 20))
 
     """
     Nome: filtered_bound

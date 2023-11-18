@@ -16,7 +16,7 @@ class MbrPolygon:
         Comportamento: Inizializza la variabile __Square
     """
 
-    def __init__(self, path):
+    def __init__(self, path: str):
         with open(path) as file:
             features = json.load(file)
 

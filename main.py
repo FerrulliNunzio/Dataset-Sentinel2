@@ -18,8 +18,8 @@ from Scripts.Dataset.Dataset import Dataset
 COPERNICUS_SURFACE_REFLECTANCE_ID = "COPERNICUS/S2_SR_HARMONIZED"
 COPERNICUS_TOP_OF_ATMOSPHERE_REFLECTANCE_ID = "COPERNICUS/S2_HARMONIZED"
 PATH = 'C:/Users/Utente/Desktop/DatasetSentinel/geojson_78.geojson'
-START_DATE = "2017-10-01"
-END_DATE = "2017-10-31"
+START_DATE = "2018-10-01"
+END_DATE = "2018-10-31"
 
 """
     Nome: maskS2clouds
@@ -68,8 +68,8 @@ if __name__ == '__main__':
                 FilteredCollection.map(mask_s2_clouds)
                 # Loaded the GeoJSON file to get the geometry of the first feature of the file
                 print("Creating geometry...\n")
-                Geojson = JsonManager(path_with_file)
-                Geometry = JsonManager.get_outside_rectangle(path_with_file, path_with_file)
+                #Geojson = JsonManager(path_with_file)
+                Geometry = JsonManager.get_outside_rectangle(path_with_file)
                 print("Creating dataset...\n")
                 dataset = Dataset(FilteredCollection)
                 print("Filtering the image collection with geometry...\n")
@@ -89,7 +89,7 @@ if __name__ == '__main__':
                     print("Extraction of the image median...\n")
                     imageToExtraxt = dataset.extract_median()
                     print("Starting to export images to the drive...\n")
-                    ExportOptions = ExportOption(imageToExtraxt, "Immagine", 'DataSetSentinel2_2017',
+                    ExportOptions = ExportOption(imageToExtraxt, "Immagine", 'download prova',
                                                  'geojson_' + str(count), Geometry, 'GeoTIFF',
                                                  'EPSG:4326', Transform)
                     try:

@@ -103,6 +103,7 @@ class JsonManager:
             self.__extract_geometry()
         return self.Coordinates
 
-    def get_outside_rectangle(self, path):
+    @staticmethod
+    def get_outside_rectangle(path):
         rectangle = MbrPolygon(path)
         return rectangle.get_square()
